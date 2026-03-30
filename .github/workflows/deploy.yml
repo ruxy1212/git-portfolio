@@ -16,6 +16,9 @@ concurrency:
 
 jobs:
   build:
+    # Only runs if the repository is NOT yours. 
+    # Replace 'YOUR_GITHUB_USERNAME' with your actual username.
+    if: github.repository_owner != 'YOUR_GITHUB_USERNAME'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,7 +27,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 9 # This version works well with Node 20.x
+          version: 9
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -33,7 +36,9 @@ jobs:
           cache: 'pnpm'
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -47,6 +52,8 @@ jobs:
           path: ./dist
 
   deploy:
+    # This also needs the check so the job doesn't hang in "skipped" status
+    if: github.repository_owner != 'YOUR_GITHUB_USERNAME'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
