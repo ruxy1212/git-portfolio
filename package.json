@@ -24,6 +24,7 @@
   "dependencies": {
     "@primer/octicons-react": "^19.23.1",
     "github-markdown-css": "^5.9.0",
+    "motion": "^12.38.0",
     "nprogress": "^0.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
