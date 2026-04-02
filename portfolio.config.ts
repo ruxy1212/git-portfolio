@@ -449,18 +449,14 @@ const CONFIG = {
         'night', // deep blue-gray
         'dracula', // purple/black
         'abyss', // muted dark
-        'procyon', // dark blue-gray
         'luxury', // dark with subtle contrast
         'dim', // muted dark gray
         'coffee', // warm dark brown
-        'nord', // cold dark gray/blue
         'sunset', // dark with warm tones
-        'cmyk', // dark with bright accent
-        'cyberpunk', // neon on dark
-        'acid', // bright neon on dark
         'synthwave', // neon purple/pink
-        'silk', // soft dark gray
-        'winter', // dark bluish-gray
+        'forest', // dark earthy green
+        'halloween', // orange/yellow dark
+        'business', // dark professional palette
       ],
       light: [
         'light', // pure white
@@ -468,20 +464,24 @@ const CONFIG = {
         'bumblebee', // yellowish accents on light
         'emerald', // bright green on light
         'corporate', // professional clean light
+        'silk', // soft light gray
+        'procyon', // light blue-gray
         'garden', // soft green light
-        'forest', // light earthy green
         'aqua', // blue/cyan light
         'lofi', // muted soft light
+        'nord', // cold light gray/blue
         'pastel', // soft pastels
         'fantasy', // colorful pastels
+        'winter', // light bluish-gray
+        'acid', // bright neon on light
+        'cmyk', // light with bright accent
         'retro', // muted retro light
-        'valentine', // pink/red pastel
-        'halloween', // orange/yellow light
         'wireframe', // minimal light gray/white
         'autumn', // warm light browns
-        'business', // light professional palette
         'lemonade', // soft yellow pastel
+        'valentine', // pink/red pastel
         'caramellatte', // cream/light beige palette
+        'cyberpunk', // neon on light yellow
       ],
     },
   },

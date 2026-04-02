@@ -74,6 +74,7 @@ export const Header = ({
     label: string;
   } | null>(null);
   const [visibleTabIds, setVisibleTabIds] = useState<string[]>([]);
+  const menuRef = useRef<HTMLUListElement | null>(null);
   const tabContainerRef = useRef<HTMLDivElement | null>(null);
   const moreMeasureRef = useRef<HTMLButtonElement | null>(null);
   const tabMeasureRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -195,6 +196,9 @@ export const Header = ({
 
   const openExternalLink = (href: string, label: string) => {
     setPendingExternalLink({ href, label });
+    if (menuRef.current) {
+      (document.activeElement as HTMLElement)?.blur();
+    }
   };
 
   const closeExternalLinkDialog = () => {
@@ -211,6 +215,10 @@ export const Header = ({
   };
 
   const handleTabClick = (item: NavItem) => {
+    if (menuRef.current) {
+      (document.activeElement as HTMLElement)?.blur();
+    }
+
     if (item.kind === 'internal' && item.to) {
       NProgress.start();
       navigate(item.to);
@@ -333,8 +341,8 @@ export const Header = ({
   );
 
   return (
-    <header className="border-b border-base-300 bg-base-100">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between gap-3">
+    <>
+      <div className="sticky top-0 z-1 max-w-7xl mx-auto px-4 lg:px-8 py-3 bg-base-100 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <img
             src={resolvedAvatarUrl}
@@ -419,6 +427,7 @@ export const Header = ({
             </button>
             <ul
               tabIndex={0}
+              ref={menuRef}
               className="menu menu-sm dropdown-content z-1 mt-2 w-72 rounded-box bg-base-100 shadow"
             >
               <li className="menu-title">Navigation</li>
@@ -474,132 +483,136 @@ export const Header = ({
           </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <RepoIcon size={16} />
-          <button
-            type="button"
-            onClick={() => openExternalLink(repositoryUrl, 'Repository')}
-            className="text-base font-semibold hover:text-primary text-left"
-          >
-            <span className="opacity-70">{repositoryOwner}</span> /{' '}
-            <span>{projectRepository || sanitizedConfig.github.username}</span>
-          </button>
-          <span className="badge badge-neutral badge-xs">Public</span>
-        </div>
-        {projectRepository && (
+      <header className="border-b border-base-300 bg-base-100">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div className="flex items-center gap-2">
-            <iframe
-              title="GitHub Star Button"
-              src={`https://ghbtns.com/github-btn.html?user=${repositoryOwner}&repo=${projectRepository}&type=star&count=true`}
-              width="110"
-              height="20"
-            />
-            <iframe
-              title="GitHub Fork Button"
-              src={`https://ghbtns.com/github-btn.html?user=${repositoryOwner}&repo=${projectRepository}&type=fork&count=true`}
-              width="110"
-              height="20"
-            />
+            <RepoIcon size={16} />
+            <button
+              type="button"
+              onClick={() => openExternalLink(repositoryUrl, 'Repository')}
+              className="text-base font-semibold hover:text-primary text-left"
+            >
+              <span className="opacity-70">{repositoryOwner}</span> /{' '}
+              <span>
+                {projectRepository || sanitizedConfig.github.username}
+              </span>
+            </button>
+            <span className="badge badge-neutral badge-xs">Public</span>
           </div>
-        )}
-      </div>
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 hidden md:block">
-        <div
-          ref={tabContainerRef}
-          className="tabs tabs-bordered flex-nowrap overflow-hidden"
-        >
-          {visibleTabs.map((item) => renderTabButton(item))}
-          {overflowTabs.length > 0 && (
-            <div className="dropdown dropdown-end">
+          {projectRepository && (
+            <div className="flex items-center gap-2">
+              <iframe
+                title="GitHub Star Button"
+                src={`https://ghbtns.com/github-btn.html?user=${repositoryOwner}&repo=${projectRepository}&type=star&count=true`}
+                width="110"
+                height="20"
+              />
+              <iframe
+                title="GitHub Fork Button"
+                src={`https://ghbtns.com/github-btn.html?user=${repositoryOwner}&repo=${projectRepository}&type=fork&count=true`}
+                width="110"
+                height="20"
+              />
+            </div>
+          )}
+        </div>
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 hidden md:block">
+          <div ref={tabContainerRef} className="tabs tabs-bordered flex-nowrap">
+            {visibleTabs.map((item) => renderTabButton(item))}
+            {overflowTabs.length > 0 && (
+              <div className="dropdown dropdown-end">
+                <button
+                  type="button"
+                  tabIndex={0}
+                  className="tab gap-2 whitespace-nowrap"
+                >
+                  More
+                  <ChevronDownIcon size={14} />
+                </button>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content z-1 mt-2 w-64 rounded-box bg-base-100 shadow"
+                >
+                  {overflowTabs.map((item) => (
+                    <li key={`overflow-${item.id}`}>
+                      <button
+                        type="button"
+                        onClick={() => handleTabClick(item)}
+                      >
+                        {item.icon}
+                        {getTabLabel(item)}
+                        {item.kind === 'external' && (
+                          <ChevronRightIcon size={14} />
+                        )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div className="absolute left-0 -top-2500 opacity-0 pointer-events-none">
+            <div className="tabs tabs-bordered">
+              {tabItems.map((item) => (
+                <button
+                  key={`measure-${item.id}`}
+                  type="button"
+                  ref={(node) => {
+                    tabMeasureRefs.current[item.id] = node;
+                  }}
+                  className="tab gap-2 whitespace-nowrap"
+                >
+                  {item.icon}
+                  {getTabLabel(item)}
+                </button>
+              ))}
               <button
                 type="button"
-                tabIndex={0}
+                ref={moreMeasureRef}
                 className="tab gap-2 whitespace-nowrap"
               >
                 More
                 <ChevronDownIcon size={14} />
               </button>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content z-1 mt-2 w-64 rounded-box bg-base-100 shadow"
-              >
-                {overflowTabs.map((item) => (
-                  <li key={`overflow-${item.id}`}>
-                    <button type="button" onClick={() => handleTabClick(item)}>
-                      {item.icon}
-                      {getTabLabel(item)}
-                      {item.kind === 'external' && (
-                        <ChevronRightIcon size={14} />
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </div>
-          )}
+          </div>
         </div>
 
-        <div className="absolute left-0 -top-2500 opacity-0 pointer-events-none">
-          <div className="tabs tabs-bordered">
-            {tabItems.map((item) => (
-              <button
-                key={`measure-${item.id}`}
-                type="button"
-                ref={(node) => {
-                  tabMeasureRefs.current[item.id] = node;
-                }}
-                className="tab gap-2 whitespace-nowrap"
-              >
-                {item.icon}
-                {getTabLabel(item)}
-              </button>
-            ))}
+        {pendingExternalLink && (
+          <dialog className="modal modal-open">
+            <div className="modal-box">
+              <h3 className="font-semibold text-lg">Leave this portfolio?</h3>
+              <p className="py-3 text-sm">
+                You are about to open {pendingExternalLink.label} on GitHub in a
+                new tab.
+              </p>
+              <div className="modal-action">
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={closeExternalLinkDialog}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={proceedExternalLink}
+                >
+                  Proceed
+                </button>
+              </div>
+            </div>
             <button
               type="button"
-              ref={moreMeasureRef}
-              className="tab gap-2 whitespace-nowrap"
-            >
-              More
-              <ChevronDownIcon size={14} />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {pendingExternalLink && (
-        <dialog className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-semibold text-lg">Leave this portfolio?</h3>
-            <p className="py-3 text-sm">
-              You are about to open {pendingExternalLink.label} on GitHub in a
-              new tab.
-            </p>
-            <div className="modal-action">
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={closeExternalLinkDialog}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={proceedExternalLink}
-              >
-                Proceed
-              </button>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="modal-backdrop"
-            onClick={closeExternalLinkDialog}
-            aria-label="Close"
-          />
-        </dialog>
-      )}
-    </header>
+              className="modal-backdrop"
+              onClick={closeExternalLinkDialog}
+              aria-label="Close"
+            />
+          </dialog>
+        )}
+      </header>
+    </>
   );
 };
