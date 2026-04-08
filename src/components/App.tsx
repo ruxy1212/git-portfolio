@@ -29,7 +29,7 @@ import Footer from './footer';
 import { renderInsightsTab } from './tabs/insights';
 import { renderOverviewTab } from './tabs/overview';
 import { renderPackagesTab } from './tabs/packages';
-import { renderProjectsTab } from './tabs/projects';
+import { ProjectsTab } from './tabs/projects';
 import { renderIssuesTab } from './tabs/issues';
 import { Header } from './header';
 import {
@@ -716,7 +716,7 @@ const App = ({ config }: { config: Config }) => {
                 />
                 <Route
                   path={tabPathMap.projects}
-                  element={renderProjectsTab({
+                  element={ProjectsTab({
                     unifiedProjects,
                     expandedProjectId,
                     setExpandedProjectId,
