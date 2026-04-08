@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import LazyImage from '../lazy-image';
 import { skeleton } from '../../utils';
-import { HistoryIcon } from '@primer/octicons-react';
 import { useSearchParams } from 'react-router-dom';
 import ProjectFilter from '../project-filter';
 
