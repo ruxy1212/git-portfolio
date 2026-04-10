@@ -30,5 +30,5 @@ export const postAction = async (
     headers: headers,
     cache: false,
   });
-  return response.data;
+  return response;
 };
