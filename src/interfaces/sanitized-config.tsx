@@ -44,6 +44,7 @@ export interface SanitizedExternalProjects {
 }
 
 export interface SanitizedProjects {
+  lastToFirst: boolean;
   github: SanitizedGitHubProjects;
   external: SanitizedExternalProjects;
 }

@@ -132,8 +132,8 @@ interface ExternalProjects {
 }
 
 interface Projects {
+  lastToFirst?: boolean;
   github?: GitHubProjects;
-
   external?: ExternalProjects;
 }
 

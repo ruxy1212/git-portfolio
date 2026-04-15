@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import LazyImage from '../lazy-image';
 import { skeleton } from '../../utils';
 import { useSearchParams } from 'react-router-dom';
@@ -19,11 +19,13 @@ type UnifiedProject = {
 };
 
 export const ProjectsTab = ({
+  lastToFirst,
   unifiedProjects,
   expandedProjectId,
   setExpandedProjectId,
   screenshotApi,
 }: {
+  lastToFirst: boolean;
   unifiedProjects: UnifiedProject[];
   expandedProjectId: string | null;
   setExpandedProjectId: Dispatch<SetStateAction<string | null>>;
@@ -31,6 +33,10 @@ export const ProjectsTab = ({
 }) => {
   const [searchParams] = useSearchParams();
   const categorySlug = searchParams.get('category') ?? 'all';
+  const [pendingExternalLink, setPendingExternalLink] = useState<{
+    href: string;
+    label: string;
+  } | null>(null);
 
   const filteredProjects = useMemo(() => {
     if (categorySlug === 'all') return unifiedProjects;
@@ -46,6 +52,24 @@ export const ProjectsTab = ({
     );
   }, [unifiedProjects, categorySlug]);
 
+  const openExternalLink = (href: string, label: string) => {
+    setPendingExternalLink({ href, label });
+    (document.activeElement as HTMLElement)?.blur();
+  };
+
+  const closeExternalLinkDialog = () => {
+    setPendingExternalLink(null);
+  };
+
+  const proceedExternalLink = () => {
+    if (!pendingExternalLink) {
+      return;
+    }
+
+    window.open(pendingExternalLink.href, '_blank', 'noopener,noreferrer');
+    closeExternalLinkDialog();
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 select-none">
       <section className="lg:col-span-12 space-y-6">
@@ -57,7 +81,10 @@ export const ProjectsTab = ({
             </div>
           </div>
           <div className="divide-y divide-base-300">
-            {filteredProjects.map((project) => {
+            {(lastToFirst
+              ? [...filteredProjects].reverse()
+              : filteredProjects
+            ).map((project) => {
               const isOpen = expandedProjectId === project.id;
               return (
                 <div key={project.id}>
@@ -71,8 +98,8 @@ export const ProjectsTab = ({
                     }
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm">
-                      <div className="sm:w-1/3 font-medium text-primary truncate">
-                        {project.name}
+                      <div className="sm:w-1/3 font-medium text-primary capitalize truncate">
+                        {project.name.replaceAll('-', ' ')}
                       </div>
                       <div className="sm:w-1/2 truncate text-base-content/80">
                         {project.shortDescription}
@@ -87,8 +114,8 @@ export const ProjectsTab = ({
                     <div className="p-4">
                       <div className="card bg-base-100 border border-base-300 shadow-sm">
                         <div className="card-body">
-                          <h4 className="font-semibold text-base">
-                            {project.name}
+                          <h4 className="font-semibold text-base capitalize">
+                            {project.name.replace('-', ' ')}
                             <span className="ms-2 badge badge-neutral badge-sm text-xs">
                               {project.year}
                             </span>
@@ -154,24 +181,30 @@ export const ProjectsTab = ({
 
                           <div className="flex gap-2">
                             {project.link && (
-                              <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="btn btn-sm btn-outline"
+                              <button
+                                onClick={() =>
+                                  openExternalLink(
+                                    project.link,
+                                    `${project.name} live url`,
+                                  )
+                                }
+                                className="cursor-pointer btn btn-sm btn-outline"
                               >
                                 View Project
-                              </a>
+                              </button>
                             )}
                             {project.repo && (
-                              <a
-                                href={project.repo}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="btn btn-sm btn-primary"
+                              <button
+                                onClick={() =>
+                                  openExternalLink(
+                                    project.repo,
+                                    `${project.name} repository`,
+                                  )
+                                }
+                                className="cursor-pointer btn btn-sm btn-primary"
                               >
                                 Open Repo
-                              </a>
+                              </button>
                             )}
                           </div>
                         </div>
@@ -184,6 +217,38 @@ export const ProjectsTab = ({
           </div>
         </div>
       </section>
+      {pendingExternalLink && (
+        <dialog className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-semibold text-lg">Leave this portfolio?</h3>
+            <p className="py-3 text-sm">
+              You are about to open {pendingExternalLink.label} in a new tab.
+            </p>
+            <div className="modal-action">
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={closeExternalLinkDialog}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={proceedExternalLink}
+              >
+                Proceed
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="modal-backdrop"
+            onClick={closeExternalLinkDialog}
+            aria-label="Close"
+          />
+        </dialog>
+      )}
     </div>
   );
 };

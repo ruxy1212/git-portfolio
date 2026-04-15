@@ -735,6 +735,7 @@ const App = ({ config }: { config: Config }) => {
                   path={tabPathMap.projects}
                   element={
                     <ProjectsTab
+                      lastToFirst={sanitizedConfig.projects.lastToFirst}
                       unifiedProjects={unifiedProjects}
                       expandedProjectId={expandedProjectId}
                       setExpandedProjectId={setExpandedProjectId}

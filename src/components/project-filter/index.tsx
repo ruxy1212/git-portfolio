@@ -150,7 +150,7 @@ export default function ProjectFilter({ projects }: ProjectFilterProps) {
       }}
     >
       <summary
-        className="btn btn-sm btn-ghost w-44 justify-between"
+        className="btn btn-sm btn-ghost w-32 sm:w-36 md:w-40 lg:w-44 justify-between"
         ref={summaryRef}
       >
         <div className="flex gap-1 min-w-0">

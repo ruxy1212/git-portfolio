@@ -13,6 +13,7 @@ const CONFIG = {
    */
   base: '/',
   projects: {
+    lastToFirst: true, // Display projects from last to first. Set to false to display from first to last.
     github: {
       display: true, // Display GitHub projects?
       mode: 'manual', // Mode can be: 'automatic' or 'manual'
@@ -513,10 +514,14 @@ const CONFIG = {
 
   // Optional Footer. Supports plain text or HTML.
   footer: `Made with <a 
-      class="text-primary font-bold" href="https://github.com/ruxy1212/git-portfolio"
+      class="text-primary font-bold hover:underline" href="https://github.com/ruxy1212/git-portfolio"
       target="_blank"
       rel="noreferrer"
-    >Git-Portfolio</a> and ❤️`,
+    >Git-Portfolio</a>. To create your portfolio in minutes <a 
+      class="text-primary font-bold hover:underline" href="https://github.com/ruxy1212/git-portfolio/fork"
+      target="_blank"
+      rel="noreferrer"
+    >Click here</a>.`,
 
   enablePWA: true,
 };
