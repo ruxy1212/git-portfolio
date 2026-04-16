@@ -7,7 +7,7 @@ const CONFIG = {
   },
   title: 'Github Portfolio', // Title shown beside avatar in Header
   /**
-   * If you are deploying to https://<USERNAME>.github.io/, for example your repository is at https://github.com/ruxy1212/ruxy1212.github.io, set base to '/'.
+   * If you are deploying to https://<USERNAME>.github.io/, for example your repository is at https://ruxy1212.github.io, set base to '/'.
    * If you are deploying to https://<USERNAME>.github.io/<REPO_NAME>/,
    * for example your repository is at https://github.com/ruxy1212/portfolio, then set base to '/portfolio/'.
    */
