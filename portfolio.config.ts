@@ -1,8 +1,6 @@
 const CONFIG = {
   github: {
     username: 'ruxy1212', // Your GitHub org/user name. (This is the only required config)
-    // repositoryOwner: 'ruxy1212', // Defaults to username when omitted.
-    // defaultRepository: 'ruxy1212', // Used for README.
     portfolioRepository: 'git-portfolio', // Used for Stars and Issues tabs.
   },
   base: '', // Set this if you want to deploy in a subfolder. example: '/my-subfolder'

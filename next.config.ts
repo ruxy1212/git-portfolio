@@ -15,6 +15,15 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   basePath: CONFIG.base || '',
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/overview',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withPWA(nextConfig);
