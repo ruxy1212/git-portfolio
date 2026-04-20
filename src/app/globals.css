@@ -1,26 +1,160 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes:
+    'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate',
+    'synthwave', 'retro', 'cyberpunk', 'valentine', 'halloween', 'garden',
+    'forest', 'aqua', 'lofi', 'pastel', 'fantasy', 'wireframe', 'black',
+    'luxury', 'dracula', 'cmyk', 'autumn', 'business', 'acid', 'lemonade',
+    'night', 'coffee', 'winter', 'dim', 'nord', 'sunset', 'caramellatte',
+    'abyss', 'silk', 'procyon';
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@plugin "daisyui/theme" {
+  name: 'procyon';
+  color-scheme: light;
+
+  --color-base-100: oklch(91.875% 0.01358 286.023);
+  --color-base-200: oklch(86.366% 0.01379 286.01);
+  --color-base-300: oklch(80.769% 0.01402 285.993);
+  --color-base-content: oklch(27.972% 0.01687 300.472);
+  --color-primary: oklch(63.186% 0.2512 13.535);
+  --color-primary-content: oklch(100% 0.00011 271.152);
+  --color-secondary: oklch(63.297% 0.10349 212.772);
+  --color-secondary-content: #ffffff;
+  --color-accent: oklch(85.296% 0.16069 99.745);
+  --color-accent-content: oklch(27.972% 0.01687 300.472);
+  --color-neutral: oklch(27.972% 0.01687 300.472);
+  --color-neutral-content: oklch(100% 0.00011 271.152);
+  --color-info: oklch(63.297% 0.10349 212.772);
+  --color-info-content: oklch(100% 0.00011 271.152);
+  --color-success: oklch(62.706% 0.1699 149.234);
+  --color-success-content: oklch(100% 0.00011 271.152);
+  --color-warning: oklch(85.296% 0.16069 99.745);
+  --color-warning-content: oklch(27.972% 0.01687 300.472);
+  --color-error: oklch(57.707% 0.21516 27.312);
+  --color-error-content: oklch(100% 0.00011 271.152);
+
+  /* border radius */
+  --radius-selector: 3rem;
+  --radius-field: 3rem;
+  --radius-box: 3rem;
+
+  /* base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* border size */
+  --border: 1px;
+
+  /* effects */
+  --depth: 1;
+  --noise: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (min-width: 966px) {
+  ::-webkit-scrollbar,
+  .scroller {
+    width: 8px;
+    height: 8px;
+    background-color: #f1f1f1;
   }
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+svg {
+  vertical-align: unset;
+}
+
+.z-hover {
+  transition: all ease-in-out 0.3s !important;
+}
+
+.z-hover:hover,
+.z-hover:focus,
+.z-hover:active {
+  transition: transform 0.3s !important;
+  -ms-transform: scale(1.01) !important;
+  -webkit-transform: scale(1.01) !important;
+  transform: scale(1.01) !important;
+}
+
+.pb-0-important {
+  padding-bottom: 0 !important;
+}
+
+.fade-in {
+  opacity: 1;
+  animation-name: fadeIn;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.markdown-body img {
+  display: inline !important;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.markdown-body a {
+  display: inline !important;
+}
+
+.markdown-body {
+  background-color: transparent !important; /* Let DaisyUI's base-100 show through */
+  /* color: var(--color-base-content) !important; Use your theme's text color */
+  font-family: inherit !important; /* Use your theme's font */
+  color: inherit !important;
+}
+
+/* Fix the image/inline issue we discussed earlier */
+.markdown-body img {
+  display: inline !important;
+  vertical-align: middle;
 }
