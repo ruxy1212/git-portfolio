@@ -1,17 +1,6 @@
 import type { NextConfig } from 'next';
-import withPWAInit from '@ducanh2912/next-pwa';
+import { withSerwist } from '@serwist/turbopack';
 import CONFIG from './portfolio.config';
-
-const withPWA = withPWAInit({
-  dest: 'public',
-  disable: !CONFIG.enablePWA,
-  register: true,
-  reloadOnOnline: true,
-  workboxOptions: {
-    // mirrors your `navigateFallback: undefined`
-    disableDevLogs: true,
-  },
-});
 
 const nextConfig: NextConfig = {
   basePath: CONFIG.base || '',
@@ -24,6 +13,13 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    domains: [
+      'github.com',
+      'githubusercontent.com',
+      'avatars.githubusercontent.com',
+    ],
+  },
 };
 
-export default withPWA(nextConfig);
+export default withSerwist(nextConfig);

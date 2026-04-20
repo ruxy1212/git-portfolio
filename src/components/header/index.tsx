@@ -16,6 +16,7 @@ import {
 } from '@primer/octicons-react';
 import type { SanitizedConfig } from '@/interfaces/sanitized-config';
 import { useRouter } from '@bprogress/next/app';
+import { usePathname } from 'next/navigation';
 import type { Profile } from '@/interfaces';
 import Image from 'next/image';
 
@@ -69,6 +70,7 @@ export const Header = ({
   setTheme,
 }: HeaderProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [pendingExternalLink, setPendingExternalLink] = useState<{
     href: string;
     label: string;
@@ -214,7 +216,7 @@ export const Header = ({
   };
 
   const isActiveItem = (item: NavItem) =>
-    item.kind === 'internal' && item.to === location.pathname;
+    item.kind === 'internal' && item.to === pathname;
 
   useEffect(() => {
     const recalculateVisibleTabs = () => {

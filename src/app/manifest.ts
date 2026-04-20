@@ -1,4 +1,3 @@
-// app/manifest.ts
 import type { MetadataRoute } from 'next';
 import CONFIG from '~/portfolio.config';
 

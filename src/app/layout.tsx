@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  applicationName: CONFIG.seo.title,
   title: CONFIG.seo.title,
   description: CONFIG.seo.description,
   metadataBase: new URL(CONFIG.seo.siteURL), // needed for absolute OG image URLs

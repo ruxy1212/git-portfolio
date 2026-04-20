@@ -31,7 +31,18 @@ const LazyImage: React.FC<{
 
   return (
     <Fragment>
-      {loading ? placeholder : <NextImage src={src} alt={alt} {...rest} />}
+      {loading ? (
+        placeholder
+      ) : (
+        <NextImage
+          unoptimized
+          width={0}
+          height={0}
+          src={src}
+          alt={alt}
+          {...rest}
+        />
+      )}
     </Fragment>
   );
 };

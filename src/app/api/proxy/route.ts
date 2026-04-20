@@ -6,10 +6,8 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { url, method, data, headers: clientHeaders } = body;
 
-    // Add your secret keys here - they are never seen by the browser
     const secureHeaders = {
       ...clientHeaders,
-      Authorization: `Bearer ${process.env.MY_SECRET_API_KEY}`,
       'Content-Type': 'application/json',
     };
 

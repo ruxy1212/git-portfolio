@@ -43,6 +43,7 @@ import {
 import { FaSquareThreads } from 'react-icons/fa6';
 import { RiDiscordFill, RiMailFill, RiPhoneFill } from 'react-icons/ri';
 import { SiResearchgate, SiUdemy, SiX } from 'react-icons/si';
+import { LOCAL_STORAGE_KEY_NAME } from '@/constants';
 
 // Types
 type RepoStat = {
@@ -389,6 +390,8 @@ export const PortfolioProvider = ({
 
   useEffect(() => {
     if (theme) document.documentElement.setAttribute('data-theme', theme);
+    if (theme && typeof window !== 'undefined')
+      localStorage.setItem(LOCAL_STORAGE_KEY_NAME, theme);
   }, [theme]);
 
   const socialLinks = useMemo<SocialLinkItem[]>(() => {
