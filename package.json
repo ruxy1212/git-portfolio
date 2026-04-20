@@ -1,7 +1,18 @@
 {
-  "name": "github-portfolio",
-  "version": "0.1.0",
+  "name": "@ruxy1212/git-portfolio",
+  "description": "Create a portfolio using on GitHub profile and Gemini",
+  "version": "2.0.0",
+  "type": "module",
   "private": true,
+  "license": "MIT",
+  "author": "ruxy1212",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruxy1212/git-portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ruxy1212/git-portfolio/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,20 +20,67 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@ducanh2912/next-pwa": "^10.2.9",
     "@next/third-parties": "^16.2.4",
+    "@primer/octicons-react": "^19.24.1",
+    "axios": "^1.15.1",
+    "axios-cache-interceptor": "^1.12.0",
+    "date-fns": "^4.1.0",
+    "github-markdown-css": "^5.9.0",
+    "motion": "^12.38.0",
     "next": "16.2.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-markdown": "^10.1.0",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@arifszn/blog-js": "^2.0.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "daisyui": "^5.5.19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.3",
+    "react-hotjar": "^6.3.1",
+    "react-icons": "^5.6.0",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "keywords": [
+    "git-profile",
+    "gitprofile",
+    "gitportfolio",
+    "git-portfolio",
+    "personal-site",
+    "template",
+    "portfolio",
+    "resume",
+    "cv",
+    "personal-website",
+    "portfolio-website",
+    "portfolio-site",
+    "portfolio-template",
+    "portfolio-page",
+    "developer-portfolio",
+    "portfolio-project",
+    "github-portfolio",
+    "tailwind-portfolio",
+    "nextjs-portfolio",
+    "projects",
+    "open-source",
+    "git",
+    "github",
+    "github-page",
+    "github-pages",
+    "github-portfolio",
+    "academic-portfolio",
+    "github-api"
+  ]
 }
