@@ -433,7 +433,7 @@ const CONFIG = {
     limit: 2, // How many articles to display. Max is 10.
   },
   contact: {
-    endpoint: 'https://ruxy.tech/api/send-email', //'https://ruxy.tech/api/send-email',
+    endpoint: '/api/send-email', // Endpoint to receive contact form submissions. Should accept POST requests with name, email, and message in the body. Set to empty string '' to hide contact form.
   },
   googleAnalytics: {
     id: '', // GA3 tracking id/GA4 tag id UA-XXXXXXXXX-X | G-XXXXXXXXXX

@@ -18,7 +18,6 @@ export default function IssuesPage() {
   } | null>(null);
 
   const submitContactForm = async (event: FormEvent<HTMLFormElement>) => {
-    // exact same body as your old submitContactForm
     event.preventDefault();
     if (!sanitizedConfig.contact.endpoint) {
       setContactMessage({
@@ -36,7 +35,6 @@ export default function IssuesPage() {
         fullName: contactName,
         email: contactEmail,
         message: contactBody,
-        passKey: 'el__grok44',
       });
 
       setContactName('');
@@ -67,5 +65,6 @@ export default function IssuesPage() {
     setContactBody,
     setContactEmail,
     setContactName,
+    endpoint: sanitizedConfig.contact.endpoint,
   });
 }

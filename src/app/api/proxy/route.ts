@@ -11,9 +11,20 @@ export async function POST(req: Request) {
       'Content-Type': 'application/json',
     };
 
+    let finalUrl =
+      url.startsWith('https://') ||
+      url.startsWith('http://') ||
+      url.startsWith('/')
+        ? url
+        : `/${url}`;
+
+    finalUrl = url.startsWith('/')
+      ? `${process.env.NEXT_APP_URL || 'http://localhost:3000'}${url}`
+      : url;
+
     const response = await axios({
       method: method || 'GET',
-      url: url,
+      url: finalUrl,
       data: data,
       headers: secureHeaders,
     });

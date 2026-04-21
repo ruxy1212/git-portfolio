@@ -20,6 +20,7 @@ export const fetchAction = async (
       headers,
     },
     {
+      id: url,
       cache: useCache ? { ttl } : false,
     },
   );
