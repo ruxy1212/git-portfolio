@@ -19,6 +19,7 @@ import { useRouter } from '@bprogress/next/app';
 import { usePathname } from 'next/navigation';
 import type { Profile } from '@/interfaces';
 import Image from 'next/image';
+import ThemeSwitch from '../common/theme-switch';
 
 type AppTab = 'overview' | 'insights' | 'projects' | 'packages' | 'issues';
 
@@ -366,27 +367,12 @@ export const Header = ({
             </button>
           ))}
           {!sanitizedConfig.themeConfig.disableSwitch && (
-            <select
+            <ThemeSwitch
               className="select select-bordered select-xs cursor-pointer"
-              value={theme}
-              onChange={(event) => setTheme(event.target.value)}
-            >
-              <optgroup label="Light Themes">
-                {sanitizedConfig.themeConfig.themes.light.map((item) => (
-                  <option key={item} value={item}>
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </option>
-                ))}
-              </optgroup>
-
-              <optgroup label="Dark Themes">
-                {sanitizedConfig.themeConfig.themes.dark.map((item) => (
-                  <option key={item} value={item}>
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </option>
-                ))}
-              </optgroup>
-            </select>
+              theme={theme}
+              setTheme={setTheme}
+              sanitizedConfig={sanitizedConfig}
+            />
           )}
         </div>
         <div className="flex items-center gap-1 lg:hidden">
@@ -398,6 +384,7 @@ export const Header = ({
                 profile={profile}
                 onNavigate={() => setShowSearch(false)}
                 onClose={() => setShowSearch(false)}
+                showSearch={showSearch}
               />
             </div>
           ) : (
@@ -443,27 +430,12 @@ export const Header = ({
               {!sanitizedConfig.themeConfig.disableSwitch && (
                 <li className="px-4 py-2">
                   <label className="label px-0 pb-1 pt-0 text-xs">Theme</label>
-                  <select
+                  <ThemeSwitch
                     className="select select-bordered select-sm w-full cursor-pointer"
-                    value={theme}
-                    onChange={(event) => setTheme(event.target.value)}
-                  >
-                    <optgroup label="Light Themes">
-                      {sanitizedConfig.themeConfig.themes.light.map((item) => (
-                        <option key={item} value={item}>
-                          {item.charAt(0).toUpperCase() + item.slice(1)}
-                        </option>
-                      ))}
-                    </optgroup>
-
-                    <optgroup label="Dark Themes">
-                      {sanitizedConfig.themeConfig.themes.dark.map((item) => (
-                        <option key={item} value={item}>
-                          {item.charAt(0).toUpperCase() + item.slice(1)}
-                        </option>
-                      ))}
-                    </optgroup>
-                  </select>
+                    theme={theme}
+                    setTheme={setTheme}
+                    sanitizedConfig={sanitizedConfig}
+                  />
                 </li>
               )}
             </ul>

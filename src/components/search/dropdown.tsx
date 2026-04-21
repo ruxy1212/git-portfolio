@@ -114,19 +114,20 @@ export function SearchDropdown({ results, query, onClose, onNavigate }: Props) {
 
       <div className="max-h-105 overflow-y-auto divide-y divide-base-200/60 search-scroll">
         {results.map((result, sIdx) => (
-          <div key={result.section} className="group">
-            {/* Section header clickable */}
-            <Link
-              href={result.sectionPath}
-              onClick={() => {
-                onNavigate?.();
-                onClose();
-              }}
-              className={`block transition-colors duration-150 px-4 pt-3 pb-1 ${
-                focusedIdx === sIdx ? 'bg-primary/10' : 'hover:bg-base-200/60'
-              }`}
-              onMouseEnter={() => setFocusedIdx(sIdx)}
-            >
+          <Link
+            key={result.section}
+            href={result.sectionPath}
+            onClick={() => {
+              onNavigate?.();
+              onClose();
+            }}
+            className={`group transition-colors duration-150 ${
+              focusedIdx === sIdx ? 'bg-primary/10' : 'hover:bg-base-200/60'
+            }`}
+            onMouseEnter={() => setFocusedIdx(sIdx)}
+          >
+            {/* Section header */}
+            <div className="block px-4 pt-3 pb-1">
               <div className="flex items-center gap-2 min-w-0">
                 <span
                   className="w-4 h-4 text-primary/70 shrink-0"
@@ -142,7 +143,7 @@ export function SearchDropdown({ results, query, onClose, onNavigate }: Props) {
                   {result.matchedItems.length !== 1 ? 'es' : ''}
                 </span>
               </div>
-            </Link>
+            </div>
 
             {/* Matched items list */}
             <ul className="px-4 pb-3 pt-1 space-y-1">
@@ -176,7 +177,7 @@ export function SearchDropdown({ results, query, onClose, onNavigate }: Props) {
                 </li>
               )}
             </ul>
-          </div>
+          </Link>
         ))}
       </div>
 

@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { SanitizedConfig } from '../../interfaces/sanitized-config';
-import { useSearchResults } from '../../hooks/useSearchIndex';
+import type { SanitizedConfig } from '@/interfaces/sanitized-config';
+import { useSearchResults } from '@/hooks/useSearchIndex';
 import { SearchDropdown } from './dropdown';
-import { Profile } from '../../interfaces/profile';
+import type { Profile } from '@/interfaces';
 
 type UnifiedProject = {
   id: string;
@@ -19,6 +19,7 @@ type Props = {
   /** Optional: called when user navigates to a result (e.g. close mobile menu) */
   onNavigate?: () => void;
   onClose?: () => void;
+  showSearch?: boolean;
 };
 
 export function SearchBar({
@@ -27,6 +28,7 @@ export function SearchBar({
   profile,
   onNavigate,
   onClose,
+  showSearch,
 }: Props) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -40,10 +42,23 @@ export function SearchBar({
     profile,
   );
 
-  // Open when there's a query; close on empty
   useEffect(() => {
-    setOpen(query.trim().length >= 2);
-  }, [query]);
+    if (showSearch && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [showSearch]);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
 
   // Keyboard shortcut: '/' focuses the search bar
   useEffect(() => {
@@ -111,7 +126,10 @@ export function SearchBar({
           ref={inputRef}
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setOpen(e.target.value.trim().length >= 2);
+            setQuery(e.target.value);
+          }}
           onFocus={() => query.trim().length >= 2 && setOpen(true)}
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
@@ -125,6 +143,7 @@ export function SearchBar({
           aria-label="Search portfolio"
           aria-expanded={open}
           aria-haspopup="listbox"
+          aria-controls="search-results-listbox"
           role="combobox"
           autoComplete="off"
           spellCheck={false}
@@ -142,11 +161,11 @@ export function SearchBar({
         {query ? (
           <button
             onClick={() => {
-              setQuery('');
               setOpen(false);
+              setQuery('');
               inputRef.current?.focus();
             }}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+            className="cursor-pointer absolute right-2.5 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
             aria-label="Clear search"
           >
             <svg
