@@ -246,17 +246,6 @@ Usage:
 
 ## Deployment
 
-### GitHub Pages (included)
-
-This repository ships with:
-
-- `.github/workflows/deploy.yml` (deploy on push to `main`)
-- `.github/workflows/test-deploy.yml` (PR checks: lint, prettier, build)
-
-Set `base` in `portfolio.config.ts` correctly before deploy.
-
-### Other static hosts (Vercel/Netlify/etc.)
-
 Build command:
 
 ```bash
@@ -265,7 +254,7 @@ npm run build
 
 Ensure `base` is `/` unless your host serves under a subpath.
 
-### Docker (Vail runtime)
+### Docker
 
 `docker-compose.yml` is included for local containerized development:
 
