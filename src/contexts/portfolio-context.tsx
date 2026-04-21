@@ -15,6 +15,7 @@ import { formatDistance } from 'date-fns';
 import {
   type CustomError,
   GENERIC_ERROR,
+  AXIOS_GENERIC_ERROR,
   INVALID_CONFIG_ERROR,
   INVALID_GITHUB_USERNAME_ERROR,
   setTooManyRequestError,
@@ -154,11 +155,11 @@ export const PortfolioProvider = ({
               break;
           }
         } else {
-          setError(GENERIC_ERROR);
+          setError(AXIOS_GENERIC_ERROR);
         }
       } catch {
         // (innerError)
-        setError(GENERIC_ERROR);
+        setError(AXIOS_GENERIC_ERROR);
       }
     } else {
       setError(GENERIC_ERROR);
@@ -318,13 +319,13 @@ export const PortfolioProvider = ({
   }, [sanitizedConfig.github.username, sanitizedConfig.cache]);
 
   const getReadme = useCallback(async () => {
-    if (!portfolioRepository) {
-      return '# README\n\nConfigure `github.defaultRepository` to load repository README.';
+    if (!repositoryOwner) {
+      return '# README\n\nConfigure `github.github.username` to load repository README.';
     }
 
     try {
       const { data } = await fetchAction(
-        `https://api.github.com/repos/${repositoryOwner}/${portfolioRepository}/readme?format=html`,
+        `https://api.github.com/repos/${repositoryOwner}/${repositoryOwner}/readme?format=html`,
         { Accept: 'application/vnd.github.html' },
         sanitizedConfig.cache,
       );
@@ -333,7 +334,7 @@ export const PortfolioProvider = ({
     } catch {
       setReadme('');
     }
-  }, [portfolioRepository, repositoryOwner, sanitizedConfig.cache]);
+  }, [repositoryOwner, sanitizedConfig.cache]);
 
   const loadData = useCallback(async () => {
     try {

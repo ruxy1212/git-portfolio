@@ -8,7 +8,7 @@
     'night', 'coffee', 'winter', 'dim', 'nord', 'sunset', 'caramellatte',
     'abyss', 'silk', 'procyon';
 }
-
+/* github-light, github-dark */
 @plugin "daisyui/theme" {
   name: 'procyon';
   color-scheme: light;
