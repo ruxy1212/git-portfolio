@@ -457,6 +457,7 @@ const CONFIG = {
     // Available themes. To remove any theme, exclude from here.
     themes: {
       dark: [
+        'githubdark', // GitHub dark theme
         'black', // pure black
         'dark', // default dark
         'night', // deep blue-gray
@@ -472,13 +473,13 @@ const CONFIG = {
         'business', // dark professional palette
       ],
       light: [
+        'githublight', // GitHub light theme
         'light', // pure white
         'cupcake', // soft pastel white
         'bumblebee', // yellowish accents on light
         'emerald', // bright green on light
         'corporate', // professional clean light
         'silk', // soft light gray
-        'procyon', // light blue-gray
         'garden', // soft green light
         'aqua', // blue/cyan light
         'lofi', // muted soft light

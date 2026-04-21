@@ -1,11 +1,11 @@
 export const DEFAULT_THEMES = {
   dark: [
+    'githubdark', // GitHub dark
     'black', // pure black
     'dark', // default dark
     'night', // deep blue-gray
     'dracula', // purple/black
     'abyss', // muted dark
-    'procyon', // dark blue-gray
     'luxury', // dark with subtle contrast
     'dim', // muted dark gray
     'coffee', // warm dark brown
@@ -19,6 +19,7 @@ export const DEFAULT_THEMES = {
     'winter', // dark bluish-gray
   ],
   light: [
+    'githublight', // GitHub light
     'light', // pure white
     'cupcake', // soft pastel white
     'bumblebee', // yellowish accents on light
