@@ -115,7 +115,7 @@ export const ProjectsTab = ({
                       <div className="card bg-base-100 border border-base-300 shadow-sm">
                         <div className="card-body">
                           <h4 className="font-semibold text-base capitalize">
-                            {project.name.replace('-', ' ')}
+                            {project.name.replaceAll('-', ' ')}
                             <span className="ms-2 badge badge-neutral badge-sm text-xs">
                               {project.year}
                             </span>

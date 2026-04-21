@@ -22,13 +22,13 @@ const CONFIG = {
         // Properties for manually specifying projects
         projects: ['ruxy1212/typing-speed-test'], // List of repository names to display. example: ['ruxy1212/my-project1', 'arifszn/my-project2']
       },
-      // Optional API endpoint to get project explainers. The url should accept a query param with the repository name like `?repo=ruxy1212/my-project`
+      // Optional API endpoint to get project explainers.
       explainerApi: {
-        url: 'https://ruxy.tech/api/analyze',
+        url: '/api/analyze',
         limit: 5,
       },
       // Optional API endpoint to get project screenshots. The url should accept a query param with the live link like `?url=https://my-project.com`
-      screenshotApi: 'https://ruxy.tech/api/screenshot?url=',
+      screenshotApi: '/api/screenshot?url=',
     },
     external: {
       // To hide the `External Projects` section, keep it empty.
